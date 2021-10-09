@@ -6,11 +6,13 @@ import java.util.Date;
 //할일들의 멤버를 관리하는 class 
 public class TodoItem {
 	//제목, 내역, 입력한 시간, 카테고리, 마감일자 총 5개의 필드를 가지고 있다. 
-    private String title;
+	private int Id;
+  	private String title;
     private String desc;
     private String current_date;
     private String category;
     private String due_date;
+    
 
     //생성자, title, decs 받는다. 다다
     public TodoItem(String category, String title, String desc, String due_date){
@@ -29,6 +31,10 @@ public class TodoItem {
         this.desc=desc2;
         this.due_date = due_date;
         this.current_date = current_date2;
+	}
+    
+    public int getId() {
+		return Id;
 	}
 
 	public String getTitle() {
@@ -70,6 +76,9 @@ public class TodoItem {
     public void setCurrent_date(String current_date) {
         this.current_date = current_date;
     }
+    public void setId(int id) {
+		this.Id = id;
+	}
 
 	@Override
 	public String toString() {
