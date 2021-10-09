@@ -59,31 +59,13 @@ public class TodoUtil {
 	}
 
 	public static void deleteItem(TodoList l) {
-		int editnum = 0;
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("[항목 삭제]\n" + "삭제할 항목의 번호를 입력하세요 > ");
-		editnum = sc.nextInt();
-		if(editnum == 0 || editnum > l.numberofItem()) {
-			System.out.println("없는 번호 입니다.");
-			return;
-		}
-		/*
-		 * 제목 일치하면 삭제!제목이 중복되는 것이 없어서 쉽게 삭제 가능. 
-		 * */
-		String reallydel;
-		for (TodoItem item : l.getList()) {
-			if (l.indexOf(item) == (editnum-1)) {
-				System.out.println(item.toString());
-				System.out.println("정말로 삭제하시겠습니까? [y/n]");
-				reallydel = sc.next();
-				if(reallydel.equals("y")) {
-					l.deleteItem(item);
-					System.out.println("성공적으로 내용이 삭제되었습니다! :) ");
-					break;
-				}
-			}
-		}
+		System.out.print("[항목 삭제]\n"
+				+ "삭제할 항목의 번호를 입력하시오 > ");
+		int index = sc.nextInt();
+		if(l.deleteItem(index) > 0)
+			System.out.println("삭제되었습니다. ");
 	}
 
 	public static void updateItem(TodoList l) {
