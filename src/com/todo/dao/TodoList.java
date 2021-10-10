@@ -33,15 +33,15 @@ public class TodoList {
 	}
 
 	public int addItem(TodoItem t) {
-		String sql = "insert into list (title, memo, cateogry, current_date, due_date)" 
+		String sql = "insert into list (title, memo, category, current_date, due_date)" 
 				+ " values (?,?,?,?,?);";
 		PreparedStatement pstmt;
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, t.getTitle());
-			pstmt.setString(2, t.getDesc());
-			pstmt.setString(3, t.getCategory());
+			pstmt.setString(1, t.getCategory()); 
+			pstmt.setString(2, t.getTitle());
+			pstmt.setString(3, t.getDesc());
 			pstmt.setString(4, t.getCurrent_date());
 			pstmt.setString(5, t.getDue_date());
 			count = pstmt.executeUpdate();
@@ -84,11 +84,11 @@ public class TodoList {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, t.getTitle());
-			pstmt.setString(2, t.getTitle());
-			pstmt.setString(3, t.getTitle());
-			pstmt.setString(4, t.getTitle());
-			pstmt.setString(5, t.getTitle());
-			pstmt.setString(6, t.getTitle());
+			pstmt.setString(2, t.getCategory());
+			pstmt.setString(3, t.getDesc());
+			pstmt.setString(4, t.getCurrent_date());
+			pstmt.setString(5, t.getDue_date());
+			pstmt.setInt(6, t.getId());
 			count = pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -113,9 +113,6 @@ public class TodoList {
 		return count;
 	}
 
-	/*
-	 * 전체 리스트를 가지고 오는 getList
-	 */
 	public ArrayList<TodoItem> getList() {
 		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
 		Statement stmt;

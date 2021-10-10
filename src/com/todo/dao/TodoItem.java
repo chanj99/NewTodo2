@@ -82,7 +82,7 @@ public class TodoItem {
 
 	@Override
 	public String toString() {
-		return  "[" + category + "]" + title + " - " + desc + " - " + due_date + " - " +current_date;
+		return  "[" + desc + "]" + category + " - " + title + " - " + due_date + " - " + current_date;
 	}
 	
 	public String cateString() {
