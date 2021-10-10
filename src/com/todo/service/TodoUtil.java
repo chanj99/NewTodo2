@@ -99,57 +99,6 @@ public class TodoUtil {
 		}
 	}
 
-	public static void saveList(TodoList l, String filename) {
-		// TODO Auto-generated method stub
-
-		try {
-			Writer w = new FileWriter("todolist.txt");
-			for (TodoItem item : l.getList()) {
-				w.write(item.toSaveString());
-			}
-			w.close();
-			
-			System.out.println("성공적으로 파일에 저장했습니다! ");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	public static void loadList(TodoList l, String filename) {
-		// TODO Auto-generated method stub
-		int count = 0;
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("todolist.txt"));
-			String oneline;
-			while((oneline = br.readLine()) != null) {
-				StringTokenizer st = new StringTokenizer(oneline, "##");
-				String category = st.nextToken();
-				String title = st.nextToken();
-			    String desc = st.nextToken();
-			    String due_date = st.nextToken();
-			    String current_date = st.nextToken();
-			    
-			    TodoItem item = new TodoItem(category, title, desc, due_date, current_date);
-			    l.addItem(item);
-			    count ++;
-			}
-			br.close();
-			System.out.println( count + "개의 항목을 읽었습니다.");
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("불러온 파일 없음.");
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return;
-		
-	}
-
 	public static void findCate(TodoList l, String cate) {
 			int count = 0;
 			for(TodoItem item : l.getListCategory(cate)) {

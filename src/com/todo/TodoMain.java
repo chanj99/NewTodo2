@@ -14,7 +14,7 @@ public class TodoMain {
 		TodoList l = new TodoList();
 		boolean isList = false;
 		boolean quit = false; //처음에는 false
-		l.importData("todolist.txt");
+		
 		Menu.displaymenu();
 		
 		do {
@@ -96,6 +96,5 @@ public class TodoMain {
 			
 			if(isList) TodoUtil.listAll(l); //true 면 정렬한 목록 보여주기. 
 		} while (!quit); //false 였다가 true 면 프로그램 끝내기, 
-		TodoUtil.saveList(l, "todolist.txt");
 	}
 }
