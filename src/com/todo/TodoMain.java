@@ -67,10 +67,15 @@ public class TodoMain {
 				TodoUtil.findList(l, keyword);
 				break;
 				
-			case "find_cate":
-				TodoUtil.findCate(l);
+			case "ls_cate":
+				TodoUtil.listCateAll(l);
 				break;
-				
+		
+			case "find_cate":
+				String cate = sc.nextLine().trim();
+				TodoUtil.findCateList(l, cate);
+				break;
+			
 			case "ls_date_desc":
 				l.sortByDate();
 				l.reverseList();
@@ -78,9 +83,7 @@ public class TodoMain {
 				isList = true;
 				break;
 				
-			case "ls_cate":
-				TodoUtil.lsCategory(l);
-				break;
+			
 				
 			case "exit":
 				quit = true;

@@ -138,7 +138,7 @@ public class TodoList {
 		}
 		return list;
 	}
-//오버로딩
+//find keyword 함수 오버로딩
 	public ArrayList<TodoItem> getList(String keyword){
 		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
 		PreparedStatement pstmt;
@@ -168,6 +168,56 @@ public class TodoList {
 		return list;
 	}
 
+/*
+ * 목록의 카테고리만 프린트 해주는 메소드 구현 
+ * */
+	public ArrayList<String> getCategories() {
+		ArrayList<String> list = new ArrayList<String>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT DISTINCT category FROM list";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				list.add(rs.getString("category"));
+			}
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	/*
+	 * find category 메소드 구현  
+	 * */
+	public ArrayList<TodoItem> getListCategory(String keyword) {
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		PreparedStatement pstmt;
+		try {
+			String sql = "SELECT * FROM list WHERE category = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			ResultSet rs = pstmt.executeQuery();
+			//목록 프린트 
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String category = rs.getString("category");
+				String title = rs.getString("title");
+				String description = rs.getString("memo");
+				String due_date = rs.getString("due_date");
+				String current_date = rs.getString("current_date");
+				TodoItem t = new TodoItem(title, description, category, due_date);
+				t.setId(id);
+				t.setCurrent_date(current_date);
+				list.add(t);
+			}
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	/*
 	 * class 를 새롭게 하나 만들어서 정렬.
@@ -248,5 +298,7 @@ public class TodoList {
 			e.printStackTrace();
 		}
 	}
+
+	
 }	
 

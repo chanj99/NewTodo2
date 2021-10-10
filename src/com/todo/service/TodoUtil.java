@@ -150,38 +150,24 @@ public class TodoUtil {
 		
 	}
 
-	public static void findCate(TodoList l) {
-				Scanner sc = new Scanner(System.in);
-				System.out.println("검색할 단어를 입력하세요. > ");
-				String findword = sc.nextLine();
-
-				//카테고리에서 키워드 검색 
-				for (TodoItem item : l.getList()) {
-					int num = item.getCategory().indexOf(findword);
-					if(num >= 0) {
-						System.out.print((l.indexOf(item) + 1) + ". " );
-						System.out.println(item.toString());
-						continue;
-					}
-				}
+	public static void findCate(TodoList l, String cate) {
+			int count = 0;
+			for(TodoItem item : l.getListCategory(cate)) {
+				System.out.println(item.toString());
+				count++;
+			}
+			System.out.printf("\n총 %d개의 항목을 찾았습니다. \n", count);
 	}
 
-	public static void lsCategory(TodoList l) {
-		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		System.out.println("현재 리스트의 카테고리입니다.");
-		List<String> cate = new ArrayList<String>();
-		for (TodoItem item : l.getList()) {
-			cate.add(item.getCategory());
+	public static void listCateAll(TodoList l) {
+		int count = 0;
+		for(String item : l.getCategories()) {
+			System.out.print(item + " ");
+			count++;
 		}
-		HashSet <String> newcate = new HashSet<String>(cate);
-		int listsize = newcate.size();
-		
-		for(String i : newcate) {
-		System.out.print(i + " /");
-		}
-		
+		System.out.printf("\n 총 %d개의 카테고리가 등록되어 있습니다. \n", count);
 	}
+	
 
 	public static void findList(TodoList l, String keyword) {
 		int count = 0;
@@ -190,6 +176,15 @@ public class TodoUtil {
 			count++;
 		}
 		System.out.printf("총 %d개의 항목을 찾았습니다.\n", count);
+	}
+	
+	public static void findCateList(TodoList l, String cate) {
+		int count = 0;
+		for(TodoItem item : l.getListCategory(cate)) {
+			System.out.println(item.toString());
+			count++;
+		}
+		System.out.printf("\n 총 %d개의 항목을 찾았습니다. \n", count);
 	}
 
 }
