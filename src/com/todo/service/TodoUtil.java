@@ -149,32 +149,6 @@ public class TodoUtil {
 		return;
 		
 	}
-	
-	public static void findInList(TodoList l) {
-		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		System.out.println("검색할 단어를 입력하세요. > ");
-		String findword = sc.nextLine();
-		
-		//제목에서 키워드 검색 
-		for (TodoItem item2 : l.getList()) {
-			int num = item2.getTitle().indexOf(findword);
-			if(num >= 0) {
-				System.out.print((l.indexOf(item2) + 1) + ". " );
-				System.out.println(item2.toString());
-				continue;
-			}
-		}
-		//내용에서 키워드 검색 
-		for (TodoItem item3 : l.getList()) {
-			int num = item3.getDesc().indexOf(findword);
-			if(num >= 0) {
-				System.out.print((l.indexOf(item3) + 1) + ". " );
-				System.out.println(item3.toString());
-				continue;
-			}
-		}
-	}
 
 	public static void findCate(TodoList l) {
 				Scanner sc = new Scanner(System.in);
@@ -215,11 +189,9 @@ public class TodoUtil {
 			System.out.println(item.toString());
 			count++;
 		}
-		System.out.printf("총 %d개의 항목을 찾았습니다. n", count);
-		
+		System.out.printf("총 %d개의 항목을 찾았습니다.\n", count);
 	}
-	
-	
+
 }
 
 

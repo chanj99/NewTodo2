@@ -138,6 +138,36 @@ public class TodoList {
 		}
 		return list;
 	}
+//오버로딩
+	public ArrayList<TodoItem> getList(String keyword){
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		PreparedStatement pstmt;
+		keyword = "%"+keyword+"%";
+		try {
+			String sql = "SELECT * FROM list WHERE title like ? or memo like ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,keyword);
+			pstmt.setString(2,keyword);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String category = rs.getString("category");
+				String title = rs.getString("title");
+				String description = rs.getString("memo");
+				String due_date = rs.getString("due_date");
+				String current_date = rs.getString("current_date");
+				TodoItem t = new TodoItem(title, description, category, due_date);
+				t.setId(id);
+				t.setCurrent_date(current_date);
+				list.add(t);
+			}
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 
 	/*
 	 * class 를 새롭게 하나 만들어서 정렬.
@@ -218,20 +248,5 @@ public class TodoList {
 			e.printStackTrace();
 		}
 	}
+}	
 
-	public ArrayList<TodoItem> getList(String keyword){
-		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
-		PreparedStatement pstmt;
-		keyword = "%d" + keyword + "%";
-		try {
-			String sql = "SELECT * FROM list WHERE title like? or memo like?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, keyword);
-			pstmt.setString(2, keyword);
-			ResultSet rs = pstmt.executeQuery();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-}
