@@ -37,10 +37,10 @@ public class TodoUtil {
 		//제목 중복 검사하고, 중복되면 추가 안 함.
 		System.out.println("제목 > "); 
 		title = sc.next();
-//		if (l.isDuplicate(title)) {
-//			System.out.printf("(경고)제목이 중복되어 사용할 수 없습니다!");
-//			return;
-//		}
+		if (l.isDuplicate(title)) {
+			System.out.printf("(경고)제목이 중복되어 사용할 수 없습니다!");
+			return;
+		}
 		//desc입력받기 
 		//엔터를 한번 제거 해준다. 그래야 공백을 제거하고 내용을 정확하게 입력 가능. 
 		sc.nextLine();
@@ -91,10 +91,17 @@ public class TodoUtil {
 		if(l.updateItem(t) > 0)
 			System.out.println("성공적으로 수정되었습니다. ");
 	}
-
+	
 	public static void listAll(TodoList l) {
 		System.out.printf("[전체 목록, 총 %d개]\n", l.getCount());
 		for (TodoItem item : l.getList()) {
+			System.out.println(item.toString());
+		}
+	}
+
+	public static void listAll(TodoList l, String orderby, int ordering) {
+		System.out.printf("[전체 목록, 총 %d개]\n", l.getCount());
+		for (TodoItem item : l.getOrderedList(orderby, ordering)) {
 			System.out.println(item.toString());
 		}
 	}

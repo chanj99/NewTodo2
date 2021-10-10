@@ -14,6 +14,7 @@ public class TodoMain {
 		TodoList l = new TodoList();
 		boolean isList = false;
 		boolean quit = false; //처음에는 false
+		//l.importData("todolist.txt");
 		
 		Menu.displaymenu();
 		
@@ -40,22 +41,23 @@ public class TodoMain {
 				break;
 
 			case "ls_name_asc":
-				l.sortByName();
 				System.out.println("제목 순으로 정렬하였습니다.");
-				isList = true; //정렬을 진행하고 true로 세팅, 정렬하고 한번 보여주
+				TodoUtil.listAll(l, "title", 1);
 				break;
 
 			case "ls_name_desc":
-				l.sortByName();
-				l.reverseList();
 				System.out.println("제목 역순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l, "title", 0);
 				break;
 				
 			case "ls_date":
-				l.sortByDate();
 				System.out.println("날짜 순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l, "due_date", 1);
+				break;
+				
+			case "ls_date_desc":
+				System.out.println("날짜 역순으로 정렬하였습니다.");
+				TodoUtil.listAll(l, "due_date", 0);
 				break;
 		
 			case "help": //메뉴를 보여주는 키워드 help case 추가. 
@@ -75,15 +77,6 @@ public class TodoMain {
 				String cate = sc.nextLine().trim();
 				TodoUtil.findCateList(l, cate);
 				break;
-			
-			case "ls_date_desc":
-				l.sortByDate();
-				l.reverseList();
-				System.out.println("날짜 역순으로 정렬하였습니다.");
-				isList = true;
-				break;
-				
-			
 				
 			case "exit":
 				quit = true;

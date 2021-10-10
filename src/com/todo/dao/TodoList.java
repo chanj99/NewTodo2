@@ -67,11 +67,11 @@ public class TodoList {
 		return count;
 	}
 
-	public int numberofItem() {
+	/*public int numberofItem() {
 		int num;
 		num = list.size();
 		return num;
-	}
+	}*/
 
 	/*
 	 * 리스트 수정하는 editItem.
@@ -218,14 +218,37 @@ public class TodoList {
 		}
 		return list;
 	}
-
-	/*
-	 * class 를 새롭게 하나 만들어서 정렬.
-	 */
-	public void sortByName() {
-		Collections.sort(list, new TodoSortByName());
-
+/*
+ * 정렬 리스트 메소드 구현 
+ * */
+	public ArrayList<TodoItem> getOrderedList(String orderby, int ordering) {
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM list ORDER BY " + orderby;
+			if(ordering == 0)
+				sql += " desc";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String category = rs.getString("category");
+				String title = rs.getString("title");
+				String description = rs.getString("memo");
+				String due_date = rs.getString("due_date");
+				String current_date = rs.getString("current_date");
+				TodoItem t = new TodoItem(title, description, category, due_date);
+				t.setId(id);
+				t.setCurrent_date(current_date);
+				list.add(t);
+			}
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
+	
 
 	public void listAll() {
 		System.out.println("\n" + "inside list_All method\n");
@@ -233,15 +256,6 @@ public class TodoList {
 			System.out.println(myitem.getTitle() + myitem.getDesc());
 		}
 	}
-
-	public void reverseList() {
-		Collections.reverse(list);
-	}
-
-	public void sortByDate() {
-		Collections.sort(list, new TodoSortByDate());
-	}
-
 	/*
 	 * 특정 리스트의 순서를 알아내는 메소드
 	 */
@@ -253,11 +267,21 @@ public class TodoList {
 	 * 중복 제목을 방지하는 메소드
 	 */
 	public Boolean isDuplicate(String title) {
-		for (TodoItem item : list) {
-			if (title.equals(item.getTitle()))
-				return true;
+		PreparedStatement pstmt;
+		boolean check = false;
+		try {
+			String sql = "SELECT COUNT (*) FROM list WHERE category = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			ResultSet rs = pstmt.executeQuery();
+			   if(rs.getConcurrency() > 0) {
+				   check = true;
+			   }
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return false;
+		return check;
 	}
 
 	public TodoItem get(int findnum) {
@@ -297,8 +321,6 @@ public class TodoList {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	
+	}	
 }	
 
