@@ -14,7 +14,7 @@ public class TodoMain {
 		TodoList l = new TodoList();
 		boolean isList = false;
 		boolean quit = false; //처음에는 false
-		//l.importData("todolist.txt");
+		//l.importData("todolist3.txt");
 		
 		Menu.displaymenu();
 		
